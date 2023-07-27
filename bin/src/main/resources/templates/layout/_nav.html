@@ -1,0 +1,25 @@
+<div xmlns:th="http://www.thymeleaf.org">
+	<!-- NAVIGATION -->
+		<nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+					<ul class="main-nav nav navbar-nav">
+						<li class="active"><a th:href="@{|/home/index|}">Home</a></li>
+						<li><a th:href="@{|/product/list|}">Store</a></li>
+						<li><a th:href="@{|/product/list?cid=1|}">Laptops</a></li>
+						<li><a th:href="@{|/product/list?cid=2|}">Smartphones</a></li>
+						<li><a th:href="@{|/product/list?cid=3|}">Accessories</a></li>
+						<li><a th:href="@{|/product/list?cid=4|}">TV</a></li>
+						<li><a href="#">Hot Deals</a></li>
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+		<!-- /NAVIGATION -->
+</div>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/index :: dynamic(~{::main})}">
+
+<body>
+	<main>
+		<!-- BREADCRUMB -->
+		<div id="breadcrumb" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="breadcrumb-header">STORE</h3>
+						<ul class="breadcrumb-tree">
+							<li><a th:href="@{|/home/index|}">Home</a></li>
+							<li class="active"><a th:href="@{|/product/list|}">Store</a></li>
+<!-- 							<li class="active"><a th:href="@{|/product/list?cid=${cid}|}">Accessories</a></li>  -->
+<!-- 							<li class="active">Headphones (227,490 Results)</li> -->
+						</ul>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /BREADCRUMB -->
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- ASIDE -->
+					<div id="aside" class="col-md-3">
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Categories</h3>
+							<div class="checkbox-filter" th:each="clist,state: ${cateList}" th:unless="${state.index}>=6" th:object="${clist}">
+								<div class="input-checkbox" style="margin-top: 10px">
+									<form action="">
+										<input type="checkbox" th:id="*{name}" th:name="cid" th:value="*{id}" onchange="this.form.submit()"
+											th:checked="${cid} == *{id}"> 
+											<label th:for="*{name}"> <span></span> [[*{name}]] <small>(5)</small>
+										</label>
+									</form>
+								</div>
+
+							</div>
+						</div>
+						<!-- /aside Widget -->
+
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Price</h3>
+							<div class="price-filter">
+								<div id="price-slider"></div>
+								<div class="input-number price-min">
+									<input id="price-min" type="number"> <span
+										class="qty-up">+</span> <span class="qty-down">-</span>
+								</div>
+								<span>-</span>
+								<div class="input-number price-max">
+									<input id="price-max" type="number"> <span
+										class="qty-up">+</span> <span class="qty-down">-</span>
+								</div>
+							</div>
+						</div>
+						<!-- /aside Widget -->
+
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Brand</h3>
+							<div class="checkbox-filter" th:each="blist,state: ${brandList}" th:unless="${state.index}>=6" th:object="${blist}">
+								<div class="input-checkbox" style="margin-top: 10px">
+									<form action="">
+										<input type="checkbox" th:id="*{name}" th:name="bid" th:value="*{id}" onchange="this.form.submit()"
+										th:checked="${bid} == *{id}"> 
+										<label th:for="*{name}"> <span></span> [[*{name}]] <small>(5)</small>
+									</label>
+									</form>
+								</div>
+
+							</div>
+						</div>
+						<!-- /aside Widget -->
+
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Top selling</h3>
+							<div class="product-widget" th:each="p,state: ${productPage}" th:unless="${state.index}>=3" th:object="${p}">
+								<div class="product-img">
+									<img th:src="@{|/assets/img/*{image}|}" alt="">
+								</div>
+								<div class="product-body">
+									<p class="product-category">[[*{category.name}]]</p>
+									<h3 class="product-name">
+										<a href="#">[[*{name}]]</a>
+									</h3>
+									<h4 class="product-price">
+										[[${#numbers.formatInteger(p.price-(p.price*p.discount)/100,1)}]]$													
+										<del class="product-old-price" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.price,1)}]]$</del>
+									</h4>
+								</div>
+							</div>
+							
+						</div>
+						<!-- /aside Widget -->
+					</div>
+					<!-- /ASIDE -->
+
+					<!-- STORE -->
+					<div id="store" class="col-md-9">
+						<!-- store top filter -->
+						<div class="store-filter clearfix">
+							<div class="store-sort">
+							<form action="">
+								<label> Sort By: 
+									<select class="input-select" name="sort" id="sort" onchange="this.form.submit()">
+										<option th:selected="${sortPage == 'id'}" value="id">Popular</option>
+										<option th:selected="${sortPage == 'name'}" value="name">Name</option>
+									</select>
+								</label> 
+								<label> Show: 
+									<select class="input-select" name="size" id="size" onchange="this.form.submit()">
+										<option th:selected="${productPage.size == 6}" value="6">6</option>
+										<option th:selected="${productPage.size == 9}" value="9">9</option>
+										<option th:selected="${productPage.size == 12}" value="12">12</option>
+										<option th:selected="${productPage.size == 15}" value="15">15</option>
+									</select>
+								
+								</label>
+							</form>
+							</div>
+							<ul class="store-grid">
+								<li class="active"><i class="fa fa-th"></i></li>
+								<li><a href="#"><i class="fa fa-th-list"></i></a></li>
+							</ul>
+						</div>
+						<!-- /store top filter -->
+
+						<!-- store products -->
+						<div class="row" ng-controller="favorite-ctrl">
+							<div th:each="p, states: ${productPage}">
+								<!-- product -->
+								<div class="col-md-4 col-xs-6">
+									<div class="product">
+										<div class="product-img">
+											<img th:src="@{|/assets/img/${p.image}|}" alt="">
+											<div class="product-label">
+												<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
+<!-- 												<span class="new">NEW</span> -->
+											</div>
+										</div>
+										<div class="product-body">
+											<p class="product-category">[[${p.category.name}]]</p>
+											<h3 class="product-name">
+												<a th:href="@{|/product/detail/${p.id}|}">[[${p.name}]]</a>
+											</h3>
+											<h4 class="product-price">
+												[[${#numbers.formatInteger(p.price-(p.price*p.discount)/100,1)}]]$													
+												<del class="product-old-price" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.price,1)}]]$</del>
+											</h4>
+											<div class="product-rating">
+												<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i>
+											</div>
+
+											<div class="product-btns">
+												<button th:if="${FVProductId.contains(p.name)}" class="add-to-wishlist" th:attr="ng-click=@{|deleteFv('${p.id}','${#request.remoteUser}')|}">
+													<i class="fa fa-heart"></i><span class="tooltipp">delete
+														to wishlist</span>
+												</button>
+												<button th:unless="${FVProductId.contains(p.name)}" class="add-to-wishlist" th:attr="ng-click=@{|createFv('${p.id}','${#request.remoteUser}')|}">
+													<i class="fa fa-heart-o"></i><span class="tooltipp">add
+														to wishlist</span>
+												</button>
+												<button class="add-to-compare">
+													<i class="fa fa-exchange"></i><span class="tooltipp">add
+														to compare</span>
+												</button>
+												<button class="quick-view">
+													<i class="fa fa-eye"></i><span class="tooltipp">quick
+														view</span>
+												</button>
+											</div>
+
+										</div>
+										<div class="add-to-cart">
+											<button class="add-to-cart-btn" th:attr="ng-click=@{|cart.add('${p.id}')|}">
+												<i class="fa fa-shopping-cart"></i> add to cart
+											</button>
+										</div>
+									</div>
+								</div>
+								<!-- /product -->
+								
+								<div th:if=${states.index}==1 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==2 class="clearfix visible-lg visible-md"></div>
+								<div th:if=${states.index}==3 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==5 class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+								<div th:if=${states.index}==7 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==8 class="clearfix visible-lg visible-md"></div>
+								<div th:if=${states.index}==9 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==11 class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+								<div th:if=${states.index}==13 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==14 class="clearfix visible-lg visible-md"></div>
+								<div th:if=${states.index}==15 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==17 class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+								<div th:if=${states.index}==19 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==20 class="clearfix visible-lg visible-md"></div>
+								<div th:if=${states.index}==21 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==23 class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+								<div th:if=${states.index}==25 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==26 class="clearfix visible-lg visible-md"></div>
+								<div th:if=${states.index}==27 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==29 class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+								<div th:if=${states.index}==31 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==32 class="clearfix visible-lg visible-md"></div>
+								<div th:if=${states.index}==33 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==35 class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+								<div th:if=${states.index}==37 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==38 class="clearfix visible-lg visible-md"></div>
+								<div th:if=${states.index}==39 class="clearfix visible-sm visible-xs"></div>
+								<div th:if=${states.index}==41 class="clearfix visible-lg visible-md visible-sm visible-xs"></div>
+								
+							</div>
+						</div>
+						<!-- /store products -->
+
+						<!-- store bottom filter -->
+						<div class="store-filter clearfix">
+							<span class="store-qty">Showing [[${numbershowstart}]]-[[${numbershowend}]] products</span>
+							<ul class="store-pagination" th:if="${productPage.totalPages > 0}">
+								<li th:class="${1 == productPage.number + 1} ? 'active' : ''">
+                               		<a th:href="@{/product/list(name=${name}, sort=${sortPage}, size=${productPage.size}, page=${1})}">
+                               			<i class="fa fa-angle-left"></i>
+                               		</a>
+                           		</li>
+
+                            	<li class="page-item active" th:each="pageNumber : ${pageNumbers}" th:if="${productPage.totalPages > 1}" 
+                            			th:class="${pageNumber == productPage.number + 1} ? 'active' : ''">
+                                	<a th:href="@{/product/list(name=${name}, sort=${sortPage}, size=${productPage.size}, page=${pageNumber})}"
+                                     th:text="${pageNumber}"></a>
+                            	</li>
+
+                            	<li th:class="${productPage.totalPages == productPage.number + 1} ? 'active' : ''">
+                                	<a th:href="@{/product/list(name=${name}, sort=${sortPage}, size=${productPage.size}, page=${productPage.totalPages})}">
+                                		<i class="fa fa-angle-right"></i>
+                                	</a>
+                            	</li>
+							</ul>
+						</div>
+						<!-- /store bottom filter -->
+					</div>
+					<!-- /STORE -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+	</main>
+</body>
+
+</html>
+

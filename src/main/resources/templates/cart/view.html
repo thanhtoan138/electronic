@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/index :: dynamic(~{::main})}">
+
+<body>
+	<main>
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb" class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="breadcrumb-header">CART Page</h3>
+					<ul class="breadcrumb-tree">
+						<li><a href="#">Home</a></li>
+						<li class="active">Cart</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="section-title">
+					<h3 class="title">Cart</h3>
+				</div>
+				<div class="col-md-12 cart-details">
+					<table class="cart">
+						<tr>
+							<th>ELECTRO</th>
+							<th>Price</th>
+							<th>Discount</th>
+							<th>Quantity</th>
+							<th style="padding-left: 100px;position: relative;">Payment</th>
+						</tr>
+						<tr ng-repeat="item in cart.items">
+							<td style="width: 500px">
+								<div class="product-widget">
+									<div class="product-img">
+										<img src="/assets/img/{{item.image}}" alt="">
+									</div>
+									<div class="product-body">
+										<h3 class="product-name"><a th:href="@{|/product/detail/{{item.id}}|}">{{item.name}}</a></h3>
+									</div>
+									<button style="background-color: #D10024;" ng-click="cart.remove(item.id)" class="delete"><i class="fa fa-close"></i></button>
+								</div>
+							</td>
+							<td>
+								<h4>{{item.price}}$</h4>
+							</td>
+							<td><b>{{item.discount}}</b></td>
+							<td style="width: 100px">
+								<div class="input-number">
+									<input type="number" ng-change="cart.saveToLocalStorage()" ng-model="item.qty" min="1">
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+							</td>
+							<td style="padding-left: 100px;position: relative;">
+								<h4>{{(item.price-(item.price*item.discount)/100)*item.qty}}$</h4>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h4>Shipping</h4>
+							</td>
+							<td>
+								<h4>FREE</h4>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h4>Total</h4>
+							</td>
+							<td>
+								<h1 style="color: #D10024;">{{cart.amount}}$</h1>
+							</td>
+						</tr>
+					</table>
+					<a th:href="@{/order/checkout}" class="primary-btn cart-submit">Check out</a>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+	</main>
+</body>
+
+</html>
+

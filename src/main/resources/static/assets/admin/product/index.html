@@ -1,0 +1,217 @@
+<!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>Product</h1>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Product</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Main Product</h3>
+                  <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table class="table table">
+                    <thead>
+                      <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Name</th>
+                        <th>Create date</th>
+                        <th>Available</th>
+                        <th></th>
+                        <th>Status</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in pager.items">
+                        <td>{{item.id}}.</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.createDate | date:'y-MM-dd'}}</td>
+                        <td><span class="badge bg-{{item.available ? 'success' : 'secondary'}}">{{item.available ? 'IN STOCK' : 'NOT IN STOCK'}}</span></td>
+                        <td>
+                          <button type="button" class="btn btn-block btn-outline-info btn-sm" data-toggle="modal"
+                            data-target="#modal-xl" ng-click="edit(item)">Info</button>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-block btn-outline-primary btn-sm" data-toggle="modal"
+                            data-target="#modal-xl" ng-click="edit(item)">Edit</button>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-block btn-outline-danger btn-sm" ng-click="delete(item)">Delete</button>
+                        </td>
+                      </tr>
+           
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
+                  <ul class="pagination pagination-sm m-0 float-left">
+                    <button type="button" class="btn btn-block btn-outline-success btn-sm" data-toggle="modal"
+                      data-target="#modal-xl">Add</button>
+                  </ul>
+                  <ul class="pagination pagination-sm m-0 float-right">
+                    <li ng-click="pager.first()" class="page-item"><a class="page-link" >&laquo;</a></li>
+                    <li ng-click="pager.prev()" class="page-item"><a class="page-link">&lt;</a></li>
+                    <li ng-click="pager.next()" class="page-item"><a class="page-link">&gt;</a></li>
+                    <li ng-click="pager.last()" class="page-item"><a class="page-link" >&raquo;</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+
+        <div class="modal fade" id="modal-xl">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Extra Large Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                  <!-- form start -->
+                  <form>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input ng-model="form.name" type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter name">
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Price</label>
+                            <input ng-model="form.price" type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Price">
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Discount</label>
+                            <input ng-model="form.discount" type="number" class="form-control" id="exampleInputEmail1"
+                              placeholder="Enter Discount">
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                        	<div class="form-group">
+                        		<label>Category</label>
+                        		<select ng-model="form.category.id" class="form-control">
+                          			<option ng-repeat="c in cates" ng-value="c.id">{{c.name}}</option>
+                        		</select>
+                     		</div>
+                        </div>
+                        <div class="col-sm-3">
+                        	<div class="form-group">
+                        		<label>Brand</label>
+                        		<select ng-model="form.brand.id" class="form-control">
+                          			<option ng-repeat="b in brands" ng-value="b.id">{{b.name}}</option>
+                        		</select>
+                     		</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputFile">File input</label>
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input onchange="angular.element(this).scope().imageChanged(this.files)"
+                            	 type="file" class="custom-file-input" id="exampleInputFile">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                          </div>
+                          <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <label>Available:</label>
+                            <div class="form-check">
+                              <input ng-model="form.available" ng-value="true" class="form-check-input" type="radio" name="radio1">
+                              <label class="form-check-label">True</label>
+                            </div>
+                            <div class="form-check">
+                              <input ng-model="form.available" ng-value="false" class="form-check-input" type="radio" name="radio1" checked>
+                              <label class="form-check-label">False</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Guarantee</label>
+                            <input ng-model="form.guarantee" type="text" class="form-control" id="exampleInputEmail1"
+                              placeholder="Enter Guarantee">
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Seri</label>
+                            <input ng-model="form.seri" type="text" class="form-control" id="exampleInputEmail1"
+                              placeholder="Enter Seri">
+                          </div>
+                        </div>
+                      </div>
+                      <!-- textarea -->
+                      <div class="form-group">
+                        <label>Title_Description</label>
+                        <textarea ng-model="form.title_description" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                      </div>
+                    </div>
+                    <!-- /.card-body -->
+                  </form>
+                </div>
+                <!-- /.card -->
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-success" ng-click="create()">Add</button>
+                <button type="button" class="btn btn-outline-primary" ng-click="update()">Update</button>
+                <button type="button" class="btn btn-outline-secondary" ng-click="reset()">Reset</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
