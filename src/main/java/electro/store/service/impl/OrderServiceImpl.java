@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import electro.store.entity.Order;
 import electro.store.entity.OrderDetail;
 import electro.store.entity.PayStatus;
+import electro.store.entity.Product;
 import electro.store.entity.Shipper;
 import electro.store.repository.OrderRepository;
 import electro.store.repository.OrderDetailRepository;
@@ -26,6 +27,9 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Autowired
 	OrderDetailRepository ddao;
+	
+	@Autowired
+	ProductServiceImpl pddao;
 	
 	@Override
 	public Order create(JsonNode orderData) {
@@ -71,6 +75,12 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public void delete(Integer id) {
 		dao.deleteById(id);
+		
+	}
+	public void updateProd( int id, int quantityprod) {
+		Product prod =  pddao.findById(id);
+		prod.setQuantityprod(quantityprod); 
+		pddao.update(prod);
 		
 	}
 

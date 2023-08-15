@@ -70,6 +70,11 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public List<Product> findTop3ByCategoryId(Integer c1) {
+		
 		return productRepository.findTop3ByCategoryId(c1);
+	}
+	@Override
+	public Product updateById(Integer QuantityProd ,Integer id) {
+		return productRepository.updateQuantityProdById(QuantityProd, id);
 	}
 }

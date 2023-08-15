@@ -27,6 +27,8 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	public void deleteOrderDetail(Integer id) {
 		detailDAO.deleteById(id);
 	}
+
+	
 	
 
 }

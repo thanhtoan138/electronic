@@ -2,6 +2,7 @@ package electro.store.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import electro.store.entity.Product;
 import electro.store.service.FavoriteService;
 import electro.store.service.ProductService;
+import electro.store.service.ReviewService;
 
 @Controller
 public class HomeController {
@@ -25,6 +27,12 @@ public class HomeController {
 	
 	@Autowired
 	FavoriteService favoriteService;
+	
+	@Autowired
+	ReviewService reviewService;
+	
+	@Autowired
+	ServletContext con;
 	
 	@GetMapping("/home/index")
 	public String home(Model model) {
@@ -54,6 +62,16 @@ public class HomeController {
 		for (Product product : listFPbyUser) {
 			FVProductId += product.getName()+"#";
 		}
+		
+		
+		// tinh tb star danh gia
+//		List<Integer> rate =reviewService.findByIdProducts(productId);
+//		int sum =0; double average =0;
+//		for(Integer r :rate) {
+//			sum+=r;			
+//		}
+//		average = sum/5;
+//		model.addAttribute("average", Math.ceil(average));
 		
 		model.addAttribute("FVProductId", FVProductId);
 		

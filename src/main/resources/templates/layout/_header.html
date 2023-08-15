@@ -17,7 +17,7 @@
 					<th:block th:if="${#request.remoteUser}">
 						<li><a th:href="@{/security/logoff}"><i class="fa fa-user-o"></i>Sign out</a></li>
 						<li><a th:href="@{/order/list}"><i class="fa fa-user-o"></i>Your order</a></li>
-						<li><a th:href="@{/admin/home/index}"><i class="fa fa-user-o"></i>Administration</a></li>
+						<li><a sec:authorize="hasAnyRole('STAF','DIRE')" th:href="@{/admin/home/index}"><i class="fa fa-user-o"></i>Administration</a></li>
 					</th:block>
 					<th:block th:unless="${#request.remoteUser}">
 						<li><a th:href="@{/security/login/form}"><i class="fa fa-user-o"></i>Sign in</a></li>

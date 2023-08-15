@@ -24,5 +24,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 	
 	@Query(value="Select * from products where Category_Id=?1 limit 3", nativeQuery=true)
 	List<Product> findTop3ByCategoryId(Integer c1);  
-
+	
+	@Query(value = "SELECT * FROM QuantityChartCategory", nativeQuery = true)
+    String [][]getQuantityChartCategory();  
+	
+	@Query(value = "SELECT * FROM QuantityChartBrand", nativeQuery = true)
+    String [][]getQuantityChartBrand(); 
+	
+	@Query(value="Update products set QuantityProd =?1  where id =?2", nativeQuery = true)
+	Product updateQuantityProdById(Integer QuantityProd,Integer id);
 }

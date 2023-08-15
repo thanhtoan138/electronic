@@ -31,4 +31,5 @@ public interface ProductService {
 
 	List<Product> findTop3ByCategoryId(Integer c1);
 
+	Product updateById(Integer QuantityProd ,Integer id);
 }

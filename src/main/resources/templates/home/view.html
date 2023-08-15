@@ -118,10 +118,13 @@
 													[[${#numbers.formatInteger(p.price-(p.price*p.discount)/100,1)}]]$									
 													<del class="product-old-price">[[${#numbers.formatInteger(p.price,1)}]]$</del>
 												</h4>
+												
 												<div class="product-rating">
-													<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-														class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-														class="fa fa-star"></i>
+													<i class="fa fa-star"></i> 
+													<i class="fa fa-star"></i> 
+													<i class="fa fa-star"></i> 
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
 												</div>
 												<div class="product-btns">
 													<button th:if="${FVProductId.contains(p.name)}" class="add-to-wishlist" th:attr="ng-click=@{|deleteFv('${p.id}','${#request.remoteUser}')|}">
@@ -239,9 +242,11 @@
 													<del class="product-old-price">[[${#numbers.formatInteger(p.price,1)}]]$</del>
 												</h4>
 												<div class="product-rating">
-													<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-														class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-														class="fa fa-star"></i>
+													 <i class="fa fa-star"></i>
+													 <i class="fa fa-star"></i> 
+													 <i class="fa fa-star"></i> 
+													 <i class="fa fa-star"></i>
+													 <i class="fa fa-star"></i>
 												</div>
 												<div class="product-btns">
 													<button th:if="${FVProductId.contains(p.name)}" class="add-to-wishlist" th:attr="ng-click=@{|deleteFv('${p.id}','${#request.remoteUser}')|}">

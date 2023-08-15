@@ -15,7 +15,8 @@ public interface ReviewService {
 
 	Review create(Review review);
 
-	List<Review> findByProductId(Integer id);
+	List<Integer> findByIdProducts(Integer productId);
 
+	
 
 }

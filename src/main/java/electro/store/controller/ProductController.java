@@ -152,8 +152,6 @@ public class ProductController {
 			@RequestParam("page") Optional<Integer> page,
 			@RequestParam("size") Optional<Integer> size) {
 		
-		List<Review> list= reviewService.findByProductId(id);
-		
 		Product item = productService.findById(id);
 		model.addAttribute("item", item);
 		
@@ -163,8 +161,33 @@ public class ProductController {
 		Pageable pageable = PageRequest.of(currentPage-1, pageSize);
 		Page<Review> resultPageReview  = reviewService.findByProduct(id, pageable);
 		
-		int totalPages = resultPageReview.getTotalPages();
+		//điếm số lượng đánh gia sp
+		List<Integer> rate =reviewService.findByIdProducts(id);
+		int star5 = 0;int star4 = 0;int star3 = 0;int star2 = 0;int star1 = 0;
+		for(Integer r :rate) {
+			if(r.equals(5)) {
+				model.addAttribute("star5", star5+=1);
+				}if(r.equals(4)) {
+					model.addAttribute("star4", star4+=1);
+					}if(r.equals(3)) {
+						model.addAttribute("star3", star3+=1);
+						}if(r.equals(2)) {
+							model.addAttribute("star2", star2+=1);
+							}if(r.equals(1)) {
+								model.addAttribute("star1", star1+=1);
+							}
+					
+		}
+		// tinh tb danh gia
+		int sum =0; double average =0;
+		for(Integer r :rate) {
+			sum+=r;			
+		}
+		average = sum/5;
+		model.addAttribute("average", Math.ceil(average));
 		
+		// phan trang 
+		int totalPages = resultPageReview.getTotalPages();		
 		if (totalPages > 0) {
 			int start = Math.max(1, currentPage - 2);
 			int end = Math.min(currentPage + 2, totalPages);

@@ -34,6 +34,7 @@ public class Product  implements Serializable{
 	Double discount;
 	String image;
 	
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Createdate")
 	Date createDate = new Date();
@@ -42,6 +43,7 @@ public class Product  implements Serializable{
 	String title_description;
 	Integer guarantee;
 	String seri;
+	Integer quantityprod;
 	
 	@ManyToOne
 	@JoinColumn(name = "Category_Id")

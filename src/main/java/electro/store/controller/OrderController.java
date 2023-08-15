@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import electro.store.entity.Order;
+import electro.store.entity.Shipper;
 import electro.store.service.OrderService;
 import electro.store.service.ShipperService;
 
@@ -20,6 +22,7 @@ public class OrderController {
 	@Autowired
 	ShipperService shipService;
 	
+
 	@RequestMapping("/order/checkout")
 	public String home() {
 		return "order/checkout";
@@ -37,4 +40,7 @@ public class OrderController {
 		model.addAttribute("order", orderService.findById(id));
 		return "order/detail";
 	}
+	
+	
+	
 }

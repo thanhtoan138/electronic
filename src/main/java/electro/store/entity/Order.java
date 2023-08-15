@@ -35,10 +35,12 @@ public class Order implements Serializable{
 	String city;
 	String address;
 	String ordernote;
+	
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Createdate")
 	Date createDate = new Date();
-
+	
 	@ManyToOne
 	@JoinColumn(name = "Username_Id")
 	Account account;
@@ -46,7 +48,7 @@ public class Order implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "order")
 	List<OrderDetail> orderDetails;
-	
+
 	@ManyToOne  
 	@JoinColumn(name = "Shipper_Id")
 	Shipper shipper;

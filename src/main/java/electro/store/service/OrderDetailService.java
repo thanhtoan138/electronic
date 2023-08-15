@@ -11,5 +11,7 @@ public interface OrderDetailService {
 	OrderDetail updateShip(OrderDetail orDetail);
 
 	void deleteOrderDetail(Integer id);
+
+	
 	
 }

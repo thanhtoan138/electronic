@@ -30,6 +30,7 @@ public class OrderDetailRestController {
 	public OrderDetail update(@PathVariable("id") Integer id,@RequestBody OrderDetail orDetail) {
 		return detailService.updateShip(orDetail);
 	}
+	
 	@DeleteMapping("{id}")
 	public void deleteByProduct_IdandUsername_Id(@PathVariable("id") Integer id ){
 		detailService.deleteOrderDetail(id);

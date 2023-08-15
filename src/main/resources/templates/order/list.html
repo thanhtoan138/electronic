@@ -38,11 +38,11 @@
 							<tr>
 								<th>NO</th>
 								<th>NO ORDER</th>
-								<th>Create date</th>
-								<th>Shipping address</th>
-								<th>Shipper</th>
-								<th>Payment Status</th>
-								<!-- <th>Payment</th> -->
+								<th>CREATE DATE</th>
+								<th>SHIPPING ADDRESS</th>
+								<th>SHIP</th>
+								<th>PAY STATUS</th>
+								
 							</tr>
 							<tr th:each="order, state: ${orders}">
 								<td>
@@ -66,11 +66,11 @@
 									<span style="width: 130px;"  class="btn btn-primary" th:if="${p.id==1}">[[${p.name}]]</span>
 									<span style="width: 130px;" class="btn btn-success" th:if="${p.id==2}">[[${p.name}]]</span>	
 								</td>
+								<td style="width: 130px;"> 
+									<a class="btn btn-danger">Cancel Order</a>
+								</td>
 
-								<!-- <td th:if="${order.shipper}==false"><p style="width: 130px;"class="btn btn-primary">waiting delivery</p></td>
-								<td th:unless="${order.shipper}==false"><p style="width: 130px;" class="btn btn-success">received</td></td>
-								<td th:if="${order.statusPay}==false"><p style="width: 130px;"class="btn btn-primary">unrealized pay</p></td>
-								<td th:unless="${order.statusPay}==false"><p style="width: 130px;"class="btn btn-success">payment done</p></td> -->
+								
 							</tr>
 							
 						</table>

@@ -33,9 +33,11 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public List<Review> findByProductId(Integer id) {
-		return reviewRepository.findByProudctId(id);
+	public List<Integer> findByIdProducts(Integer id) {		
+		return reviewRepository.findByIdProducts(id);
 	}
+
+	
 
 	
 

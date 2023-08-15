@@ -14,7 +14,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer>{
 	@Query("Select r from Review r where r.product.id=?1")
 	Page<Review> findByProduct(Integer id, Pageable pageable);
 	
-	@Query("Select r from Review r where r.product.id=?1")
-	List<Review> findByProudctId(Integer id);
-
+	@Query("Select r.rate from Review r where r.product.id=?1")
+	List<Integer> findByIdProducts(Integer id);
+	
 }
