@@ -3,12 +3,17 @@ package electro.store.controller;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +25,14 @@ import com.google.gson.JsonObject;
 import electro.store.dto.PaymentRestDto;
 import electro.store.dto.TransactionStatusDto;
 import electro.store.payment.Config;
+import electro.store.service.OrderService;
 
-@RestController
+@Controller
 @RequestMapping("/api/payment")
 public class PaymentController {
+	
+	@Autowired
+	OrderService orderService;
 	
 //	Ngân hàng	NCB
 //	Số thẻ	9704198526191432198
@@ -124,22 +133,41 @@ public class PaymentController {
         
 	}
 	
-	@GetMapping("/payment_infor")
-	public ResponseEntity<?> transaction(
-			@RequestParam(value = "vnp_Amount") String amount,
-			@RequestParam(value = "vnp_BankCode") String bankcode,
-			@RequestParam(value = "vnp_OrderInfo") String order,
-			@RequestParam(value = "vnp_ResponseCode") String responseCode) {
-		TransactionStatusDto transactionStatusDto = new TransactionStatusDto();
-		if (responseCode.equals("00")) {
-			transactionStatusDto.setStatus("OK");
-			transactionStatusDto.setMessage("Successfully");
-			transactionStatusDto.setData("");
+	@GetMapping("/payment_result")
+	public String transaction(Model model,
+			@RequestParam(value = "vnp_Amount") String vnp_Amount,
+			@RequestParam(value = "vnp_BankCode") String vnp_BankCode,
+			@RequestParam(value = "vnp_OrderInfo") String vnp_OrderInfo,
+			@RequestParam(value = "vnp_CardType") String vnp_CardType,
+			@RequestParam(value = "vnp_PayDate") String vnp_PayDate,
+			@RequestParam(value = "vnp_ResponseCode") String vnp_ResponseCode) {
+		
+		Date payDate = new Date();
+		try {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+	        payDate = dateFormat.parse(vnp_PayDate);
+
+//            model.addAttribute("payDate", payDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+		
+		if (vnp_ResponseCode.equals("00")) {
+			model.addAttribute("vnp_OrderInfo", vnp_OrderInfo);
+			model.addAttribute("vnp_Amount", vnp_Amount);
+			model.addAttribute("vnp_BankCode", vnp_BankCode);
+			model.addAttribute("vnp_CardType", vnp_CardType);
+			model.addAttribute("vnp_PayDate", payDate);
+			model.addAttribute("vnp_ResponseCode", "Successfully");
+			orderService.updateStatusPayment();
 		} else {
-			transactionStatusDto.setStatus("No");
-			transactionStatusDto.setMessage("Failed");
-			transactionStatusDto.setData("");
+			model.addAttribute("vnp_OrderInfo", vnp_OrderInfo);
+			model.addAttribute("vnp_Amount", vnp_Amount);
+			model.addAttribute("vnp_BankCode", vnp_BankCode);
+			model.addAttribute("vnp_CardType", vnp_CardType);
+			model.addAttribute("vnp_PayDate", payDate);
+			model.addAttribute("vnp_ResponseCode", "Fail");
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(transactionStatusDto);
+		return "order/payment-result";
 	}
 }

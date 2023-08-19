@@ -34,14 +34,14 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public Order create(JsonNode orderData) {
 		ObjectMapper mapper = new ObjectMapper();
-		Shipper s = new Shipper();
-		s.setId(1);
-		PayStatus p = new PayStatus();
-		p.setId(1);
+//		Shipper s = new Shipper();
+//		s.setId(1);
+//		PayStatus p = new PayStatus();
+//		p.setId(1);
 		//convert gia tri json thanh doi tuong class
 		Order order = mapper.convertValue(orderData, Order.class);
-		order.setShipper(s);
-		order.setPaystatus(p);
+//		order.setShipper(s);
+//		order.setPaystatus(p);
 		dao.save(order);
 		
 		TypeReference<List<OrderDetail>> type = new TypeReference<List<OrderDetail>>() {};
@@ -82,6 +82,11 @@ public class OrderServiceImpl implements OrderService{
 		prod.setQuantityprod(quantityprod); 
 		pddao.update(prod);
 		
+	}
+
+	@Override
+	public void updateStatusPayment() {
+		dao.updateStatusPayment();
 	}
 
 }

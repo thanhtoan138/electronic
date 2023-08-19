@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layout/index :: dynamic(~{::main})}">
+
+<body>
+	<main>
+		<!-- BREADCRUMB -->
+		<div id="breadcrumb" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="breadcrumb-header">PAYMENT RESULT</h3>
+						<ul class="breadcrumb-tree">
+							<li><a href="#">Home</a></li>
+							<li class="active">PAYMENT RESULT</li>
+						</ul>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /BREADCRUMB -->
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="section-title">
+						<h3 class="title">PAYMENT RESULT</h3>
+					</div>
+					<div class="col-md-12 cart-details">
+						<table class="cart">
+							<tr>
+								<th>NAME</th>
+								<th>VALUE</th>
+
+							</tr>
+							<tr>
+								<td>
+									<h4>Order Messagae</h4>
+								</td>
+								<td>
+									<h4>[[${vnp_OrderInfo}]]</h4>
+								</td>								
+								
+							</tr>
+							<tr>
+								<td>
+									<h4>Amount</h4>
+								</td>
+								<td>
+									<h4>[[${vnp_Amount}/100]] VND</h4>
+								</td>								
+								
+							</tr>
+							<tr>
+								<td>
+									<h4>Bank Code</h4>
+								</td>
+								<td>
+									<h4>[[${vnp_BankCode}]]</h4>
+								</td>								
+								
+							</tr>
+							<tr>
+								<td>
+									<h4>Card ATM</h4>
+								</td>
+								<td>
+									<h4>[[${vnp_CardType}]]</h4>
+								</td>								
+								
+							</tr>
+							<tr>
+								<td>
+									<h4>Date Code</h4>
+								</td>
+								<td>
+									<h4>[[${vnp_PayDate}]]</h4>
+								</td>								
+								
+							</tr>
+
+							<tr>
+								<td>
+									<h4>STATUS</h4>
+								</td>
+								<td>
+									<h4>[[${vnp_ResponseCode}]]</h4>
+								</td>								
+								
+							</tr>
+						</table>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+	</main>
+</body>
+
+</html>
+
