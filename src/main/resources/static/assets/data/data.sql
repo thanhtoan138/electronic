@@ -1,6 +1,6 @@
-create database railway1;
+create database railway;
 
-use railway1;
+use railway;
 
 create table accounts(
 	Username nvarchar(50) primary key,
@@ -43,6 +43,7 @@ create table products(
 	Title_Description nvarchar(500),
 	Guarantee int,
 	Seri varchar(50),
+    Quantityprod int,
 	Category_Id int not null,
 	Brand_Id int not null,
 	foreign key (Category_Id) references categories(Id) on update cascade,
@@ -85,6 +86,16 @@ create table configdetails(
 	foreign key (Product_Id) references products(Id) on update cascade
 
 );
+
+create table shippers(
+Id int primary key auto_increment,
+name nvarchar(50)
+);
+create table pay_status(
+Id int primary key auto_increment,
+name nvarchar(50)
+);
+
 create table orders(
 	Id int primary key AUTO_INCREMENT,
 	Fullname nvarchar(50) not null,
@@ -96,8 +107,8 @@ create table orders(
 	CreateDate date not null,
 	Username_Id nvarchar(50) not null,
 	foreign key (Username_Id) references accounts(Username) on update cascade,
-    Shipper_Id int , foreign key (Shipper_Id) references shippers(Id) on update cascade,
-    PayStatus_Id int, foreign key (PayStatus_Id) references pay_status(Id) on update cascade
+    Shipper_Id int , foreign key (Shipper_Id) references shippers(Id),
+    Pay_Status int, foreign key (Pay_Status) references pay_status(Id) 
 );
 create table orderdetails(
 	Id int primary key AUTO_INCREMENT,
@@ -116,14 +127,14 @@ create table favorites(
 	foreign key (Product_Id) references products(Id) on update cascade,
 	foreign key (Username_Id) references accounts(Username) on update cascade
 );
-create table shippers(
-Id int primary key AUTO_INCREMENT,
-name nvarchar(50)
-);
-create table pay_status(
-Id int primary key AUTO_INCREMENT,
-name nvarchar(50)
-);
+
+
+insert into shippers
+values('1','waiting delivery'),('2','received');
+
+insert into pay_status
+values('1','unpaid'),('2','paid');
+
 insert into accounts
 values 
 	('binhbv','123456',N'Bùi Văn Bình','binh@gmail.com','0326924248','2000-10-16',0,'photo1.jpg','DATABASE'),
@@ -149,87 +160,87 @@ values
 insert into brands(name)
 values
 	('Acer'),('Asus'),('MSI'),('Dell'),('HP'),('Lenovo'),('Samsung'),('Apple'),('Xiaomi'),('Logitech'),('Corsair'),('LG'),('Sony'),('Toshiba'),('Panasonic');
-insert into products(name, price, discount,image,createdate,available,title_description,guarantee,seri,category_id,brand_id)
+insert into products(name, price, discount,image,createdate,available,title_description,guarantee,seri,quantityprod,category_id,brand_id)
 values
 	(N'Laptop ACER Nitro 5 Eagle AN515-57-54MV (i5-11400H/RAM 8GB/512GB SSD/ Windows 11)','1000','10','laptopacer1_1.png','2022-12-26',0,'
 			As a gaming laptop of the Acer brand, the Acer Nitro 5 Eagle AN515-57-54MV laptop is equipped with a powerful i5 chip,
 			NVIDIA GeForce RTX 3050 graphics card, 8Gb ram and large capacity. Combined with a beautiful and powerful design, this will be the
-			choice for young gamers and graphic designers.','12','Nitro','1','1'),
+			choice for young gamers and graphic designers.','12','Nitro',123,'1','1'),
 	(N'Laptop ASUS G513IH-HN015T (Ryzen 7 4800H/RAM 8GB/512GB SSD/ Windows 10)','1100','15','laptopasus1_1.png','2022-12-26',0,'
 			The ASUS G513IH-HN015T 90NR07P2-M00390 laptop is bringing an impressive generation of gaming laptops with Asus cool design and equipped 
 			with powerful AMD Ryzen 7 generation processors and NVIDIA GeForce graphics cards that promise to deliver great performance. This is a 
-			computer model suitable for users who specialize in gaming or graphics processing.','24','ROG','1','2'),
+			computer model suitable for users who specialize in gaming or graphics processing.','24','ROG',123,'1','2'),
 	(N'Laptop MSI Modern 15 A10M (i5-10210U/RAM 8GB/512GB SSD/ Windows 10)','800','5','laptopmsi1_1.png','2022-12-26',0,'
 			The MSI Modern 15 A10M 667VN laptop is a stylish laptop with a compact design that carries the power of the 10th generation i5 processor 
-			for incredible work and entertainment capabilities.','12','Modern Series','1','3'),
+			for incredible work and entertainment capabilities.','12','Modern Series',123,'1','3'),
 	(N'Laptop MSI Thin GF65 10UE (i5-10500H/RAM 16GB/512GB SSD/ Windows 10)','1000','10','laptopmsi2_1.png','2022-12-26',1,'
 			The MSI Thin GF65 10UE 286VN laptop of the MSI brand is compactly designed with a powerful configuration with an i5 chip that provides 
 			outstanding performance. This is a laptop product in the mid-range price segment that is very suitable for students, office workers or 
-			gamers.','12','GF Series','1','3'),
+			gamers.','12','GF Series',123,'1','3'),
 	(N'Laptop ACER Aspire 5 A514-54-51VT (i5-1135G7/RAM 8GB/512GB SSD/ Windows 10)','800','0','laptopacer2_1.png','2022-12-26',0,'
 			Acer Aspire 5 laptop A514-54-51VT (NX.A23SV.004) possesses an elegant design, combined with an advanced 14" wide screen, and can also be 
 			used continuously for 11 hours up to maximum. thanks to the high battery capacity of 40Wh. This is a laptop product suitable for office 
-			workers who want to get higher performance.','12','Aspire 5','1','1'),
+			workers who want to get higher performance.','12','Aspire 5',123,'1','1'),
 	(N'Laptop Dell Latitude 3520 70251603 (i3-1115G4/4GB/256GB SSD/Fedora)','700','0','laptopdell1_1.png','2022-12-26',0,'
 			The Dell Latitude 3520 70251603 laptop (15.6" HD/Intel Core i3-1115G4/4GB/256GB SSD/Fedora/1.8kg) is designed to perfection with a 
 			luxurious, more rugged appearance that brings a premium feel to the mid-range model. With the constantly updated Fedora operating system 
-			and advanced management features, users will have the best experience.','12','Latitude','1','4'),
+			and advanced management features, users will have the best experience.','12','Latitude',123,'1','4'),
 	(N'Laptop HP 14s-fq1080AU (Ryzen 3 5300U/RAM 4GB/256GB SSD/ Windows 10)','700','0','laptophp1_1.png','2022-12-26',0,'
 			HP 14s-fq1080AU 4K0Z7PA laptop from HP has a neat design and stable configuration with AMD Ryzen 3 generation processor. This promises 
-			to be a quality laptop to meet the simple daily needs of users. .','12','HP14s','1','5'),
+			to be a quality laptop to meet the simple daily needs of users. .','12','HP14s',123,'1','5'),
 	(N'Laptop Lenovo Legion 5 15ACH6A (Ryzen 7 5800H/RAM 8GB/512GB SSD/ Windows 10)','1200','5','laptoplenovo1_1.png','2022-12-26',0,'
 			Lenovo Legion 5 Laptop 15ACH6A-82NW003BVN is a new generation gaming laptop equipped with a Ryzen 7 5800H chip with AMD Radeon RX 6600M 
 			8GB GDDR6 discrete card to give users a great screen experience with powerful performance. This will be the perfect choice with the need 
-			to use high performance such as graphics or heavy software, high data processing speed.','24','Legion','1','6'),
+			to use high performance such as graphics or heavy software, high data processing speed.','24','Legion',123,'1','6'),
 	(N'Laptop ASUS FX506HCB-HN1138W (i5-11400H/RAM 8GB/512GB SSD/ Windows 11)','1100','10','laptopasus2_1.png','2022-12-26',0,'
 			ASUS FX506HCB-HN1138W laptop is a version of Asus TUF Gaming laptop with impressive appearance, equipped with impressive configuration 
 			with 11th generation Intel Core i5 processor, unleashing graphic creativity thanks to the addition of a video card. NVIDIA is high-end. 
-			This promises to be a satisfying gaming laptop for your needs in the price segment.','24','TUF Gaming','1','2'),
+			This promises to be a satisfying gaming laptop for your needs in the price segment.','24','TUF Gaming',123,'1','2'),
 	(N'Laptop HP VICTUS 16-d0204TX (i5-11400H/RAM 8GB/512GB SSD/ Windows 11)','1300','0','laptophp2_1.png','2022-12-26',0,'
 			HP Victus 16-d0204TX (i5-11400H) laptop (Black) is a high-end laptop product line that is popular with many technology followers and is 
 			designed with strong performance and ram memory. , standard screen, .. this laptop from the famous brand HP promises to bring users the 
-			interesting things they deserve as well as with your profitable investment.','12','VICTUS','1','5'),
-	(N'Smartphone Samsung Galaxy Z Flip4 8GB/128GB','1000','0','smartphonesamsung1_1.png','2022-12-26',0,'',6,'','2','7'),
-	(N'iPhone 13 Pro | Chính Hãng VNA','1200','10','smartphoneapple1_1.png','2022-12-26',0,'',6,'','2','8'),
-	(N'iPhone 14 Plus | Chính hãng VNA','1100','5','smartphoneapple2_1.png','2022-12-26',0,'',6,'','2','8'),
-	(N'Xiaomi Redmi Note 11','400','0','smartphonexiaomi1_1.png','2022-12-26',0,'',6,'','2','9'),
-	(N'ASUS ROG Phone 6','1000','0','smartphoneasus1_1.png','2022-12-26',0,'',6,'','2','2'),
+			interesting things they deserve as well as with your profitable investment.','12','VICTUS',123,'1','5'),
+	(N'Smartphone Samsung Galaxy Z Flip4 8GB/128GB','1000','0','smartphonesamsung1_1.png','2022-12-26',0,'',6,'',123,'2','7'),
+	(N'iPhone 13 Pro | Chính Hãng VNA','1200','10','smartphoneapple1_1.png','2022-12-26',0,'',6,'',123,'2','8'),
+	(N'iPhone 14 Plus | Chính hãng VNA','1100','5','smartphoneapple2_1.png','2022-12-26',0,'',6,'',123,'2','8'),
+	(N'Xiaomi Redmi Note 11','400','0','smartphonexiaomi1_1.png','2022-12-26',0,'',6,'',123,'2','9'),
+	(N'ASUS ROG Phone 6','1000','0','smartphoneasus1_1.png','2022-12-26',0,'',6,'',123,'2','2'),
 
-	(N'Chuột gaming Logitech G102 Gen2 Lightsync','20','0','mouselogitech1_1.png','2022-12-26',0,'',6,'','3','10'),
-	(N'Chuột máy tính Asus TUF Gaming M3','25','20','mouseasus1_1.png','2022-12-26',0,'',6,'','3','2'),
-	(N'Bàn phím cơ Logitech Gaming G813 (Full Size/GL Clicky) (920-009098)','100','0','keyboardlogitech1_1.png','2022-12-26',0,'',6,'','3','10'),
-	(N'Bàn phím cơ không dây ASUS ROG Falchion (NX Blue Switch)','100','10','keyboardasus1_1.png','2022-12-26',0,'',6,'','3','2'),
-	(N'Bàn phím cơ CORSAIR K68 (Full size/Cherry MX Red) CH-9102020-NA','80','0','keyboardcorsair1_1.png','2022-12-26',0,'',6,'','3','11'),
+	(N'Chuột gaming Logitech G102 Gen2 Lightsync','20','0','mouselogitech1_1.png','2022-12-26',0,'',6,'',123,'3','10'),
+	(N'Chuột máy tính Asus TUF Gaming M3','25','20','mouseasus1_1.png','2022-12-26',0,'',6,'',123,'3','2'),
+	(N'Bàn phím cơ Logitech Gaming G813 (Full Size/GL Clicky) (920-009098)','100','0','keyboardlogitech1_1.png','2022-12-26',0,'',6,'',123,'3','10'),
+	(N'Bàn phím cơ không dây ASUS ROG Falchion (NX Blue Switch)','100','10','keyboardasus1_1.png','2022-12-26',0,'',6,'',123,'3','2'),
+	(N'Bàn phím cơ CORSAIR K68 (Full size/Cherry MX Red) CH-9102020-NA','80','0','keyboardcorsair1_1.png','2022-12-26',0,'',6,'',123,'3','11'),
 
-	(N'Smart Tivi Samsung 4K UHD 50 Inch UA50AU7700KXXV','450','10','tvsamsung1_1.png','2022-12-26',0,'',6,'','4','7'),
-	(N'Smart Tivi LG 4K 55 inch 55UP7550PTC (55")','400','20','tvlg1_1.png','2022-12-26',0,'',6,'','4','12'),
-	(N'Google Tivi Sony 4K 55 inch KD-55X75K','600','0','tvsony1_1.png','2022-12-26',0,'',6,'','4','13'),
-	(N'Smart Tivi NanoCell LG 4K 43 inch 43NANO77TPA','400','0','tvlg2_1.png','2022-12-26',0,'',6,'','4','12'),
-	(N'Smart Tivi Samsung Crystal UHD 4K 55 inch','500','5','tvsamsung2_1.png','2022-12-26',0,'',6,'','4','7'),
+	(N'Smart Tivi Samsung 4K UHD 50 Inch UA50AU7700KXXV','450','10','tvsamsung1_1.png','2022-12-26',0,'',6,'',123,'4','7'),
+	(N'Smart Tivi LG 4K 55 inch 55UP7550PTC (55")','400','20','tvlg1_1.png','2022-12-26',0,'',6,'',123,'4','12'),
+	(N'Google Tivi Sony 4K 55 inch KD-55X75K','600','0','tvsony1_1.png','2022-12-26',0,'',6,'',123,'4','13'),
+	(N'Smart Tivi NanoCell LG 4K 43 inch 43NANO77TPA','400','0','tvlg2_1.png','2022-12-26',0,'',6,'',123,'4','12'),
+	(N'Smart Tivi Samsung Crystal UHD 4K 55 inch','500','5','tvsamsung2_1.png','2022-12-26',0,'',6,'',123,'4','7'),
 
-	(N'Tai nghe On-ear Logitech H150','25','10','headphonelogitech1_1.png','2022-12-26',0,'',6,'','5','11'),
-	(N'Tai nghe Sony MDR-ZX110APWC1E','45','10','headphonesony1_1.png','2022-12-26',0,'',6,'','5','13'),
-	(N'Tai nghe Over-ear ASUS ROG Strix Fusion 300','160','20','headphoneasus1_1.png','2022-12-26',0,'',6,'','5','2'),
-	(N'Loa 5.1 Logitech Z906','300','10','speakerlogitech1_1.png','2022-12-26',0,'',6,'','5','10'),
-	(N'Loa Bluetooth Sony SRS-XB32/RC E','150','145','speakersony1_1.png','2022-12-26',1,'',6,'','5','13'),
+	(N'Tai nghe On-ear Logitech H150','25','10','headphonelogitech1_1.png','2022-12-26',0,'',6,'',123,'5','11'),
+	(N'Tai nghe Sony MDR-ZX110APWC1E','45','10','headphonesony1_1.png','2022-12-26',0,'',6,'',123,'5','13'),
+	(N'Tai nghe Over-ear ASUS ROG Strix Fusion 300','160','20','headphoneasus1_1.png','2022-12-26',0,'',6,'',123,'5','2'),
+	(N'Loa 5.1 Logitech Z906','300','10','speakerlogitech1_1.png','2022-12-26',0,'',6,'',123,'5','10'),
+	(N'Loa Bluetooth Sony SRS-XB32/RC E','150','145','speakersony1_1.png','2022-12-26',1,'',6,'',123,'5','13'),
 
-	(N'Máy giặt Samsung Addwash Inverter 9 kg WW90K54E0UW/SV','400','0','wmsamsung1_1.png','2022-12-26',0,'',6,'','6','7'),
-	(N'Máy giặt Toshiba Inverter 9.5 kg TW-BK105S3V','500','0','wmtoshiba1_1.png','2022-12-26',0,'',6,'','6','14'),
-	(N'Máy giặt Panasonic Inverter 9.5 Kg NA-FD95V1BRV','500','470','wmpanasonic1_1.png','2022-12-26',1,'',6,'','6','15'),
-	(N'Máy giặt sấy LG Inverter 9 kg FV1409G4V','700','0','wmlg1_1.png','2022-12-26',0,'',6,'','6','12'),
-	(N'Máy giặt Samsung Inverter 10 kg WA10T5260BY/SV','300','10','wmsamsung2_1.png','2022-12-26',0,'',6,'','6','7'),
+	(N'Máy giặt Samsung Addwash Inverter 9 kg WW90K54E0UW/SV','400','0','wmsamsung1_1.png','2022-12-26',0,'',6,'',123,'6','7'),
+	(N'Máy giặt Toshiba Inverter 9.5 kg TW-BK105S3V','500','0','wmtoshiba1_1.png','2022-12-26',0,'',6,'',123,'6','14'),
+	(N'Máy giặt Panasonic Inverter 9.5 Kg NA-FD95V1BRV','500','470','wmpanasonic1_1.png','2022-12-26',1,'',6,'',123,'6','15'),
+	(N'Máy giặt sấy LG Inverter 9 kg FV1409G4V','700','0','wmlg1_1.png','2022-12-26',0,'',6,'',123,'6','12'),
+	(N'Máy giặt Samsung Inverter 10 kg WA10T5260BY/SV','300','10','wmsamsung2_1.png','2022-12-26',0,'',6,'',123,'6','7'),
 
-	(N'Máy lạnh Panasonic CU/CS-N12VKH-8 1.5HP (13.500 BTU)','500','5','acpanasonic1_1.png','2022-12-26',0,'',6,'','7','15'),
-	(N'Máy lạnh Toshiba RAS-H18U2KSG-V 2HP (18.000 BTU)','600','10','actoshiba1_1.png','2022-12-26',1,'',6,'','7','14'),
-	(N'Máy lạnh LG Inverter 1.5 HP V13ENS1','400','20','aclg1_1.png','2022-12-26',0,'',6,'','7','12'),
-	(N'Máy lạnh Panasonic CU/CS-N18XKH-8 2 HP (18.000 Btu/h)','700','5','acpanasonic2_1.png','2022-12-26',0,'',6,'','7','15'),
-	(N'Máy lạnh Toshiba Inverter 1 HP RAS-H10H4KCVG-V','400','20','actoshiba2_1.png','2022-12-26',1,'',6,'','7','14'),
+	(N'Máy lạnh Panasonic CU/CS-N12VKH-8 1.5HP (13.500 BTU)','500','5','acpanasonic1_1.png','2022-12-26',0,'',6,'',123,'7','15'),
+	(N'Máy lạnh Toshiba RAS-H18U2KSG-V 2HP (18.000 BTU)','600','10','actoshiba1_1.png','2022-12-26',1,'',6,'',123,'7','14'),
+	(N'Máy lạnh LG Inverter 1.5 HP V13ENS1','400','20','aclg1_1.png','2022-12-26',0,'',6,'',123,'7','12'),
+	(N'Máy lạnh Panasonic CU/CS-N18XKH-8 2 HP (18.000 Btu/h)','700','5','acpanasonic2_1.png','2022-12-26',0,'',6,'',123,'7','15'),
+	(N'Máy lạnh Toshiba Inverter 1 HP RAS-H10H4KCVG-V','400','20','actoshiba2_1.png','2022-12-26',1,'',6,'',123,'7','14'),
 
-	(N'Tủ lạnh Panasonic Inverter 268 lít','500','0','refrigeratorpanasonic1_1.png','2022-12-26',0,'',6,'','8','15'),
-	(N'Tủ lạnh Toshiba Inverter 555 lít GR-AG58VA (XK)','800','10','refrigeratortoshiba1_1.png','2022-12-26',0,'',6,'','8','14'),
-	(N'Tủ lạnh Samsung Inverter 680 lít RS62R5001B4/SV','700','5','refrigeratorsamsung1_1.png','2022-12-26',0,'',6,'','8','7'),
-	(N'Tủ lạnh Panasonic Inverter 322 lít NR-BC360WKVN','600','0','refrigeratorpanasonic2_1.png','2022-12-26',1,'',6,'','8','15'),
-	(N'Tủ lạnh Panasonic Inverter 234 lít NR-TV261APSV','400','0','refrigeratorpanasonic3_1.png','2022-12-26',0,'',6,'','8','15');
+	(N'Tủ lạnh Panasonic Inverter 268 lít','500','0','refrigeratorpanasonic1_1.png','2022-12-26',0,'',6,'',123,'8','15'),
+	(N'Tủ lạnh Toshiba Inverter 555 lít GR-AG58VA (XK)','800','10','refrigeratortoshiba1_1.png','2022-12-26',0,'',6,'',123,'8','14'),
+	(N'Tủ lạnh Samsung Inverter 680 lít RS62R5001B4/SV','700','5','refrigeratorsamsung1_1.png','2022-12-26',0,'',6,'',123,'8','7'),
+	(N'Tủ lạnh Panasonic Inverter 322 lít NR-BC360WKVN','600','0','refrigeratorpanasonic2_1.png','2022-12-26',1,'',6,'',123,'8','15'),
+	(N'Tủ lạnh Panasonic Inverter 234 lít NR-TV261APSV','400','0','refrigeratorpanasonic3_1.png','2022-12-26',0,'',6,'',123,'8','15');
 insert into gallarys(Product_Id, image)
 values 
 	(1,'laptopacer1_1.png'),(1,'laptopacer1_2.png'),(1,'laptopacer1_3.png'),(1,'laptopacer1_4.png'),(1,'laptopacer1_5.png'),
@@ -527,3 +538,17 @@ values
 	('Gate','alex@gmail.com','Good machine, enthusiastic staff Playing games should plug in the charger to open the device to 
 	full performance. Go to settings to set 144hz smoother',
 		2,'2022-10-24',1);
+        
+        
+create view QuantityChartByMonth as
+select count(od.Quantity), month(o.CreateDate) from orders o join orderdetails od where o.Id = od.Order_Id group by month(o.CreateDate);
+
+create view PriceChartByMonth as
+select sum(od.price), date(o.CreateDate) from orders o join orderdetails od where o.Id = od.Order_Id group by date(o.CreateDate);
+
+
+create view QuantityChartCategory as
+select quantityprod, p.Name from products p;
+
+create view QuantityChartBrand as
+SELECT count(ba.Name), ba.Name FROM products p inner join brands ba where  p.brand_id = ba.id group by (p.brand_id); 

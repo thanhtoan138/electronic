@@ -106,7 +106,9 @@
 											<div class="product-img">
 												<img th:src="@{|/assets/img/${p.image}|}" alt="">
 												<div class="product-label">
-													<span class="sale">[[${#numbers.formatInteger(p.discount,1)}]]%</span> <span class="new">NEW</span>
+													<span class="sale">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
+													<span th:if="${p.quantityprod>0}" class="new">NEW</span>
+													<span th:unless="${p.quantityprod>0}" class="new">OUT OF STOCK</span>
 												</div>
 											</div>
 											<div class="product-body">
@@ -168,7 +170,9 @@
 											<div class="product-img">
 												<img th:src="@{|/assets/img/${p.image}|}" alt="">
 												<div class="product-label">
-													<span class="sale">[[${#numbers.formatInteger(p.discount,1)}]]%</span> <span class="new">NEW</span>
+													<span class="sale">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
+													<span th:if="${p.quantityprod>0}" class="new">NEW</span>
+													<span th:unless="${p.quantityprod>0}" class="new">OUT OF STOCK</span>
 												</div>
 											</div>
 											<div class="product-body">
@@ -228,7 +232,9 @@
 											<div class="product-img">
 												<img th:src="@{|/assets/img/${p.image}|}" alt="">
 												<div class="product-label">
-													<span class="sale">[[${#numbers.formatInteger(p.discount,1)}]]%</span> <span class="new">NEW</span>
+													<span class="sale">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
+													<span th:if="${p.quantityprod>0}" class="new">NEW</span>
+													<span th:unless="${p.quantityprod>0}" class="new">OUT OF STOCK</span>
 												</div>
 											</div>
 											<div class="product-body">
@@ -290,7 +296,9 @@
 											<div class="product-img">
 												<img th:src="@{|/assets/img/${p.image}|}" alt="">
 												<div class="product-label">
-													<span class="sale">[[${#numbers.formatInteger(p.discount,1)}]]%</span> <span class="new">NEW</span>
+													<span class="sale">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
+													<span th:if="${p.quantityprod>0}" class="new">NEW</span>
+													<span th:unless="${p.quantityprod>0}" class="new">OUT OF STOCK</span>
 												</div>
 											</div>
 											<div class="product-body">
@@ -434,7 +442,9 @@
 											<div class="product-img">
 												<img th:src="@{|/assets/img/${p.image}|}" alt="">
 												<div class="product-label">
-													<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> <span class="new">NEW</span>
+													<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
+													<span th:if="${p.quantityprod>0}" class="new">NEW</span>
+													<span th:unless="${p.quantityprod>0}" class="new">OUT OF STOCK</span>
 												</div>
 											</div>
 											<div class="product-body">
@@ -494,7 +504,9 @@
 											<div class="product-img">
 												<img th:src="@{|/assets/img/${p.image}|}" alt="">
 												<div class="product-label">
-													<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> <span class="new">NEW</span>
+													<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
+													<span th:if="${p.quantityprod>0}" class="new">NEW</span>
+													<span th:unless="${p.quantityprod>0}" class="new">OUT OF STOCK</span>
 												</div>
 											</div>
 											<div class="product-body">
@@ -554,7 +566,9 @@
 											<div class="product-img">
 												<img th:src="@{|/assets/img/${p.image}|}" alt="">
 												<div class="product-label">
-													<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> <span class="new">NEW</span>
+													<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
+													<span th:if="${p.quantityprod>0}" class="new">NEW</span>
+													<span th:unless="${p.quantityprod>0}" class="new">OUT OF STOCK</span>
 												</div>
 											</div>
 											<div class="product-body">
@@ -614,7 +628,9 @@
 											<div class="product-img">
 												<img th:src="@{|/assets/img/${p.image}|}" alt="">
 												<div class="product-label">
-													<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> <span class="new">NEW</span>
+													<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
+													<span th:if="${p.quantityprod>0}" class="new">NEW</span>
+													<span th:unless="${p.quantityprod>0}" class="new">OUT OF STOCK</span>
 												</div>
 											</div>
 											<div class="product-body">

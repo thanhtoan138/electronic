@@ -8,7 +8,7 @@ app.controller("order-ctrl", function($scope, $http) {
 		$http.get("/rest/orders").then(resp => {
 			$scope.items = resp.data;
 			$scope.items.forEach(item => {
-				item.createDate = new Date(item.createDate)
+				item.createDate = new Date(item.createDate)				
 			})
 		});
 		//load ship status 
@@ -23,6 +23,9 @@ app.controller("order-ctrl", function($scope, $http) {
 	}
 	//khởi đầu 
 	$scope.initialize();
+
+	
+	
 	
 	//hiển thị lên form
 	$scope.edit = function(item) {

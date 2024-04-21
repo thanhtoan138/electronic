@@ -27,7 +27,7 @@
               <h3 class="card-title">Order Detail Manager</h3>
               <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search" ng-model="search">
                   <div class="input-group-append">
                     <button type="submit" class="btn btn-default">
                       <i class="fas fa-search"></i>
@@ -54,7 +54,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="item in pager.items">
+                  <tr ng-repeat="item in items | filter:search">
                     <td>{{item.order.id}}.</td>
                     <td>{{item.product.name}}</td>
                     <td>{{item.product.price}}</td>

@@ -99,7 +99,8 @@
 										<a href="#">[[*{name}]]</a>
 									</h3>
 									<h4 class="product-price">
-										[[${#numbers.formatInteger(p.price-(p.price*p.discount)/100,1)}]]$													
+										[[${#numbers.formatInteger(p.price-(p.price*p.discount)/100,1)}]]$
+																							
 										<del class="product-old-price" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.price,1)}]]$</del>
 									</h4>
 								</div>
@@ -150,7 +151,7 @@
 											<img th:src="@{|/assets/img/${p.image}|}" alt="">
 											<div class="product-label">
 												<span class="sale" th:if="${p.discount>0}">[[${#numbers.formatInteger(p.discount,1)}]]%</span> 
-<!-- 												<span class="new">NEW</span> -->
+												<span th:unless="${p.quantityprod>0}" class="new">OUT OF STOCK</span>
 											</div>
 										</div>
 										<div class="product-body">

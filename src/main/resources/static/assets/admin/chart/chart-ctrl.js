@@ -20,9 +20,11 @@ app.controller("chart-ctrl",
         for (let i = 0; i < 12; i++) {
 		 let a = new Date(PriceChartByMonth[i][1]);
 		 let b = parseInt(PriceChartByMonth[i][0]);
+		 
 		   MonthlyPriceByYear.push({
             x: a,
             y: b
+			
         });
  		}
        
@@ -169,7 +171,7 @@ app.controller("chart-ctrl",
 	},
 	data: [{
 		type: "pie",
-		startAngle: 240,
+		startAngle: 300,
 	/*	yValueFormatString: "##0.00\"%\"",*/
 		indexLabel: "{label} {y}",
 		dataPoints: dpsQuantityChartCategory
@@ -185,7 +187,7 @@ app.controller("chart-ctrl",
     
     var chart3 = new CanvasJS.Chart("chartContainer3",
     {
-      	animationEnabled: true,
+    animationEnabled: true,
 	theme: "light2",
 	title:{
 		text: "Revenue By Month"
